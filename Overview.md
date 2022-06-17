@@ -2,7 +2,7 @@
 ```mermaid
 graph TD;
     A[Start]-->B(Logon Attempt);
-    B-->C{Logon Approved};
+    B-->C{Authentication};
     C-->D(Create Account);
     D-->B;
     C-->E(Application Access);
