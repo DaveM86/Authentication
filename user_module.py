@@ -4,6 +4,9 @@ from abc import ABC
 
 @dataclass
 class UserInterface(ABC):
+    '''
+    Interface for the user Class, can't be instantiated.
+    '''
     username: str
     salt: str = field(default_factory=str)
     hash: str = field(default_factory=str)
@@ -11,6 +14,11 @@ class UserInterface(ABC):
 
 @dataclass
 class User(UserInterface):
+    '''
+    User class can be instantiated with just the user name,
+    default field values initilise remaining atributes required by the
+    Authorisation Manager.
+    '''
     username: str
     salt: str = field(default_factory=str)
     hash: str = field(default_factory=str)

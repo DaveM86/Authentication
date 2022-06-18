@@ -3,48 +3,28 @@ Main module to control the Authentication of user provided by the app.
 '''
 from user_module import User
 from hashing_module import hashing, checking
-import sqlite3
-
+from auth_db_conn import DBConnectionInsert, DBConnectionSelect
 
 class AuthenticationManager():
-    #register the user with the class that requires authentication
-    #user is a class it's self, subclass of UserInterface
+    '''
+    Main class used to control the authentication of a user registered with
+    this class. Instantiate the class with an instance of User and 
+    call authenticate(), the class will handle the authentication.
+    '''
     def __init__(self, user: User):
-        self.user = user
-        
-    def set_connection(self):
-        #set connection to the sqllite database
-        return sqlite3.connect('users.db')
-    
+        self.user = user   
+
     def login_check(self) -> list:
-        #setup connection to db
-        conn = self.set_connection()
-        cur = conn.cursor()
-        #get user details from user table
-        cur.execute("SELECT * FROM users WHERE username = ?;",(self.user.username,))
-        user_details = cur.fetchone()
-        conn.commit()
-        conn.close()
-        return (user_details)
+        #using the auth_db_conn module to retrieve user details
+        db_man = DBConnectionSelect()
+        user_details = db_man.fetchone(self.user.username)
+        return user_details
 
     def create_account(self, user_details: dict) -> None:
-        #setup connection to users db
-        conn = self.set_connection()
-        cur = conn.cursor()
-        #add user to table
-        cur.execute("""INSERT into users
-                    (username, email_address, salt, hash) 
-                    values(?, ?, ?, ?);""", 
-                    (
-                        user_details['username'], 
-                        user_details['email_address'], 
-                        user_details['salt'], 
-                        user_details['hash'],
-                    )
-                    )
-        print('Account Created')
-        conn.commit()
-        conn.close()
+        #using the auth_db_conn module to add a user to the users table
+        db_man = DBConnectionInsert()
+        db_man.account_create(user_details)
+        del(db_man)
 
     def create_account_form(self) -> None:
         #form requesting users submit their logon details
@@ -65,7 +45,7 @@ class AuthenticationManager():
         salt, hash = hashing(password_1)
         
         #dict of users submissions created
-        user_details = {
+        user_details: dict = {
                         'username':self.user.username,
                         'email_address':email_address,
                         'salt':salt,
@@ -88,7 +68,7 @@ class AuthenticationManager():
         #requests user password
         password = input('Enter your password: ')
         #checking function will hash the provided password with salt and
-        #compaire it to the users stores hash value returning a bool.
+        #compaire it to the users stored hash value returning a bool.
         password_status = checking(self.user.salt, self.user.hash, password)
         if password_status:
             #grantted acces to application
@@ -96,9 +76,8 @@ class AuthenticationManager():
         else:
             #denied acces to application
             print("\n You've been done by sha256 hashing!!!! Access Denied \n")
-        print(self.user.__dict__)
 
-    def authenticate(self):
+    def authenticate(self) -> None:
         #function called by the app and controls the authentication
         logged_in = False
         while not logged_in:
