@@ -1,4 +1,5 @@
-
+High level overview process flow.
+---
 ```mermaid
 graph TD;
     A[Start]-->B(Logon Attempt);
@@ -8,34 +9,11 @@ graph TD;
     D --> B;
     C -->|Authentcation Achieved| E(Application Access);
 ```
----
+Diagram 1
 
-Interaction of a user with no valid account (Account Creation).
-```mermaid
-sequenceDiagram;
-    AutoNumber;
-    participant User;
-    participant Application;
-    participant Authorisation Manager;
-    participant User Database;
-    participant Hashing_Module;
-    User->>Application: Applicatation Opened;
-    Application->>User: Logon Form;
-    User->>Application: Username Provided;
-    Application->>Authorisation Manager: Authorisation Triggered;
-    Authorisation Manager->>User Database: Account Check;
-    User Database->>Authorisation Manager: No Account;
-    Authorisation Manager->>User: Create Account Form;
-    User->>Authorisation Manager: Account Requested;
-    Authorisation Manager->>Hashing_Module: Password Details;
-    Hashing_Module->>Authorisation Manager: Hashed Password and Salt;
-    Authorisation Manager->>User Database: Account Details for Storage;
-    User Database->>Authorisation Manager: Storage Confrimation;
-    Authorisation Manager->>User: Logon Form (step 3 of login);
-
-```
 ---
-Interaction of a user with valid account (Login).
+<br/>Interaction of a user with valid account (Login).
+---
 ```mermaid
 sequenceDiagram;
     AutoNumber;
@@ -57,8 +35,38 @@ sequenceDiagram;
     Authorisation Manager->>User: Logon Apprved;
     User->>Application: Application Access;
 ```
+Diagram 2
+
 ---
-Authentication Process Class Diagram
+<br/>Interaction of a user with no valid account (Account Creation).
+---
+```mermaid
+sequenceDiagram;
+    AutoNumber;
+    participant User;
+    participant Application;
+    participant Authorisation Manager;
+    participant User Database;
+    participant Hashing_Module;
+    User->>Application: Applicatation Opened;
+    Application->>User: Logon Form;
+    User->>Application: Username Provided;
+    Application->>Authorisation Manager: Authorisation Triggered;
+    Authorisation Manager->>User Database: Account Check;
+    User Database->>Authorisation Manager: No Account;
+    Authorisation Manager->>User: Create Account Form;
+    User->>Authorisation Manager: Account Requested;
+    Authorisation Manager->>Hashing_Module: Password Details;
+    Hashing_Module->>Authorisation Manager: Hashed Password and Salt;
+    Authorisation Manager->>User Database: Account Details for Storage;
+    User Database->>Authorisation Manager: Storage Confrimation;
+    Authorisation Manager->>User: Logon Form (step 3 of login);
+```
+Diagram 3
+
+---
+<br/>Authentication Process Class Diagram
+---
 ```mermaid
 classDiagram
     class UserInterface {
@@ -100,3 +108,4 @@ classDiagram
     IDBConnection <|-- DBConnectionSelect
     IDBConnection <|-- DBConnectionInsert
 ```
+Diagram 4
