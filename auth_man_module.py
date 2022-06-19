@@ -18,6 +18,7 @@ class AuthenticationManager():
         #using the auth_db_conn module to retrieve user details
         db_man = DBConnectionSelect()
         user_details = db_man.fetchone(self.user.username)
+        del(db_man)
         return user_details
 
     def create_account(self, user_details: dict) -> None:
@@ -65,11 +66,14 @@ class AuthenticationManager():
         self.user.salt = user_details[2]
         self.user.hash = user_details[3]
         self.user.email_address = user_details[1]
+
         #requests user password
         password = input('Enter your password: ')
+
         #checking function will hash the provided password with salt and
         #compaire it to the users stored hash value returning a bool.
         password_status = checking(self.user.salt, self.user.hash, password)
+
         if password_status:
             #grantted acces to application
             print('\n You have access to the world!!!!! \n')

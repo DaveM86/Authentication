@@ -3,6 +3,7 @@
 graph TD;
     A[Start]-->B(Logon Attempt);
     B-->C{Authentication};
+    C-->B;
     C-->D(Create Account);
     D-->B;
     C-->E(Application Access);
@@ -83,7 +84,19 @@ classDiagram
         
         authenticate()
     }
+    class IDBConnection{
+        <<interface>>
+        conn
+        cur  
+    }
+    class DBConnectionSelect{
+        fetchone(String username) user_details
+    }
+    class DBConnectionInsert{
+        account_create(Dictionary user_details)
+    }
     UserInterface <|-- User
     AuthorisationManager o-- User
-
+    IDBConnection <|-- DBConnectionSelect
+    IDBConnection <|-- DBConnectionInsert
 ```

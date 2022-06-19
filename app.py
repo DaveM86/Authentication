@@ -11,7 +11,6 @@ def main():
     user = User(username)
 
     auth_man = AuthenticationManager(user)
-
     auth_man.authenticate()
 
 if __name__=='__main__':
