@@ -2,11 +2,11 @@
 ```mermaid
 graph TD;
     A[Start]-->B(Logon Attempt);
-    B-->C{Authentication};
-    C-->B;
-    C-->D(Create Account);
-    D-->B;
-    C-->E(Application Access);
+    B --> C{Authentication};
+    C -->|Password Error| B;
+    C -->|No Account| D(Create Account);
+    D --> B;
+    C -->|Authentcation Achieved| E(Application Access);
 ```
 ---
 
