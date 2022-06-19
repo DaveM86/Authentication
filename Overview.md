@@ -94,8 +94,8 @@ classDiagram
     }
     class IDBConnection{
         <<interface>>
-        conn
-        cur  
+        sqlite3.Connection conn
+        sqlite3.Cursor cur
     }
     class DBConnectionSelect{
         fetchone(String username) user_details
