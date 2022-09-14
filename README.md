@@ -1,5 +1,5 @@
 # Authentication
-Small application for authentication.
+Small application for authentication run at the commandline to simulate hashing password, account creation and verification.
 
 Run the initial_setup.py to create the database structure.
 
