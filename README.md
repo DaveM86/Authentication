@@ -67,7 +67,7 @@ sequenceDiagram;
     Hashing_Module->>Authorisation Manager: Hashed Password and Salt;
     Authorisation Manager->>User Database: Account Details for Storage;
     User Database->>Authorisation Manager: Storage Confrimation;
-    Authorisation Manager->>User: Logon Form (step 3 of login);
+    Authorisation Manager->>User: Logon Form (step 2 of login);
 ```
 Diagram 3
 
