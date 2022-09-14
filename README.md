@@ -5,8 +5,6 @@ Run the initial_setup.py to create the database structure.
 
 Run app.py to run the authentication process.
 
-See below for dataflows and class diagrams.
-
 High level overview process flow.
 ---
 ```mermaid
