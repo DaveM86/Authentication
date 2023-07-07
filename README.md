@@ -1,3 +1,3 @@
 # Authentication
 Small application for authentication.
-More details to follow
+More details tp follow
