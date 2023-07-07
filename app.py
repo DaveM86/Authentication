@@ -7,9 +7,7 @@ def logon_form() -> str:
 
 def main():
     username = logon_form()
-    
     user = User(username)
-
     auth_man = AuthenticationManager(user)
     auth_man.authenticate()
 

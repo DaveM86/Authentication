@@ -4,6 +4,7 @@ Main module to control the Authentication of user provided by the app.
 from user_module import User
 from hashing_module import hashing, checking
 from auth_db_conn import DBConnectionInsert, DBConnectionSelect
+import getpass
 
 class AuthenticationManager():
     '''
@@ -33,8 +34,8 @@ class AuthenticationManager():
 
         while flag == True:
             #loops whilst user provided passwords don't match
-            password_1 = input("Please create a password: ")
-            password_2 = input("Please retype your password: ")
+            password_1 = getpass.getpass("Please create a password: ")
+            password_2 = getpass.getpass("Please retype your password: ")
             if password_1 == password_2:
                 flag = False
             else:
@@ -67,8 +68,14 @@ class AuthenticationManager():
         self.user.hash = user_details[3]
         self.user.email_address = user_details[1]
 
+        print('\n')
+        print('For demonstration purposes, these are the users details held in the db:')
+        print('\n')
+        print(self.user)
+        print('\n')
+
         #requests user password
-        password = input('Enter your password: ')
+        password = getpass.getpass('Enter your password: ')
 
         #checking function will hash the provided password with salt and
         #compaire it to the users stored hash value returning a bool.
